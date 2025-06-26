@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
 
 export default  function Main(){
 
@@ -8,11 +9,22 @@ const [meme, setMeme] = useState({
     imgURL: "http://i.imgflip.com/1bij.jpg"
 })
 
+    const [imgArray, setImgArray] = useState({})
+    
+ //using useEffect to get data from the api and then storing it in setImgArray. and using an 
+ //empty array as dependence
+    useEffect(()=>{
+        fetch(" https://api.imgflip.com/get_memes")
+        .then(res => res.json())
+        .then(data => setImgArray(data.data.memes))
+    }, [])
+
+    
 
 function handleChange(event){
-    //this is a const that is getting the value a nd name from the input, which is the current target.
+    //this is a const that is getting the value and name from the input properties, which is the current target.
     const {value, name} = event.currentTarget
-
+//name has to be the exact same in the input property as the state() we want to change. So we want to change to topText and bottomText, so name has to match those in the input
     setMeme(prevMeme =>{
         return {
             ...prevMeme,
