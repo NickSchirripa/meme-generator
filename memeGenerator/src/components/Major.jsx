@@ -17,9 +17,17 @@ const [meme, setMeme] = useState({
         fetch(" https://api.imgflip.com/get_memes")
         .then(res => res.json())
         .then(data => setImgArray(data.data.memes))
+        console.log(setImgArray)
     }, [])
 
-    
+    //function that gets random url from data
+    function getMemeImg(){
+        const randomNumber = Math.floor(Math.random() * setImgArray,length)
+        const newMemeUrl = setImgArray[randomNumber].url
+        setMeme(prevMeme=>({
+            ...prevMeme, imgURL: newMemeUrl
+        }))
+    }
 
 function handleChange(event){
     //this is a const that is getting the value and name from the input properties, which is the current target.
@@ -56,7 +64,7 @@ function handleChange(event){
                     value={meme.bottomText}
                 />
             </label>
-            <button>Get a new meme image 🖼</button>
+            <button onClick={getMemeImg}>Get a new meme image 🖼</button>
         </div>
         <div className="meme">
             <img src={meme.imgURL}/>
